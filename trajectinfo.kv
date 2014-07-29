@@ -1,0 +1,33 @@
+<TrajectInfoCore>:
+    orientation: 'vertical'
+
+    BoxLayout:
+        id: form_box
+        orientation: 'horizontal'
+
+        Label:
+            id: from_label
+            text: 'Van: '
+            padding_x: 2
+
+        TextInput:
+            id: from_field
+
+        Label:
+            id: to_label
+            text: 'Naar: '
+            padding_x: 2
+
+        TextInput:
+            id: to_field
+
+        Button:
+            id: submit_button
+            text: 'Vraag informatie op'
+            on_release: root.get_delay_info()
+
+    Widget:
+        id: whitespace1
+
+    Widget:
+        id: whitespace2
