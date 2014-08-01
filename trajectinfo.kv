@@ -1,3 +1,5 @@
+#:import Button kivy.uix.button.Button
+#:import ComboEdit combobox.ComboEdit
 <TrajectInfoCore>:
     orientation: 'vertical'
 
@@ -10,16 +12,20 @@
             text: 'Van: '
             padding_x: 2
 
-        TextInput:
+        ComboEdit:
             id: from_field
+            options:
+                [Button(text=str(station), size_hint_y=None, height=30) for station in root.stations]
 
         Label:
             id: to_label
             text: 'Naar: '
             padding_x: 2
 
-        TextInput:
+        ComboEdit:
             id: to_field
+            options:
+                [Button(text=str(station), size_hint_y=None, height=30) for station in root.stations]
 
         Button:
             id: submit_button

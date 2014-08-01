@@ -18,7 +18,8 @@ class NSAPI:
         return urllib2.urlopen(req)
 
     def get_stations_list(self):
-        stations = defaultdict(str)
+        # stations = defaultdict(str)
+        stations = dict()
         r = self._request('http://webservices.ns.nl/ns-api-stations-v2')
         root = etree.XML(r.read())
 
@@ -39,8 +40,10 @@ class NSAPI:
 
     def get_travel_advice(self, station_from, station_to):
         reis_advies = list()
-        url = 'http://webservices.ns.nl/ns-api-treinplanner?fromStation={}&toStation={}'.format(station_from,
-                                                                                                station_to)
+        station_from = station_from.replace(' ', '+')
+        station_to = station_to.replace(' ', '+')
+        url = 'http://webservices.ns.nl/ns-api-treinplanner?fromStation={0}&toStation={1}'.format(station_from,
+                                                                                                  station_to)
         r = self._request(url)
         root = etree.XML(r.read())
 
@@ -73,14 +76,14 @@ class StationModel:
         self.lon = lon
 
     def __repr__(self):
-        return unicode(self.names)
+        return self.names
 
 
 class ReisModel:
     def __init__(self, station_from, station_to, geplande_vertrek_tijd, actuele_vertrek_tijd, geplande_aankomst_tijd,
                  actuele_aankomst_tijd):
-        self.station_from = station_from
-        self.station_to = station_to
+        self.station_from = station_from.replace('+', ' ')
+        self.station_to = station_to.replace('+', ' ')
         self.geplande_vertrek_tijd = geplande_vertrek_tijd
         self.actuele_vertrek_tijd = actuele_vertrek_tijd
         self.geplande_aankomst_tijd = geplande_aankomst_tijd
